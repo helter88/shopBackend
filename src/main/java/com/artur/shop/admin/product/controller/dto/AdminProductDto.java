@@ -16,7 +16,7 @@ public record AdminProductDto(
         @Length(min=2)
         String category,
         String description,
-        @NotBlank
+
         @Min(0)
         BigDecimal price,
         AdminProductCurrency currency) {
