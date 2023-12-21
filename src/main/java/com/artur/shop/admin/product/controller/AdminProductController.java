@@ -5,9 +5,9 @@ import com.artur.shop.admin.product.controller.dto.UploadImageDto;
 import com.artur.shop.admin.product.model.AdminProduct;
 import com.artur.shop.admin.product.service.AdminProductImageService;
 import com.artur.shop.admin.product.service.AdminProductService;
+import com.github.slugify.Slugify;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
-import org.springframework.core.io.FileSystemResourceLoader;
 import org.springframework.core.io.Resource;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -18,10 +18,8 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.OutputStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.nio.file.Paths;
 
 @RestController
 @RequiredArgsConstructor
@@ -75,7 +73,7 @@ public class AdminProductController {
 
 
 
-    private static AdminProduct mapAdminProduct(AdminProductDto adminProductDto, Long id) {
+    private AdminProduct mapAdminProduct(AdminProductDto adminProductDto, Long id) {
         return AdminProduct.builder()
                 .id(id)
                 .name(adminProductDto.name())
@@ -84,7 +82,15 @@ public class AdminProductController {
                 .price(adminProductDto.price())
                 .currency(adminProductDto.currency())
                 .image(adminProductDto.image())
+                .slug(slugging(adminProductDto.slug()))
                 .build();
     }
+
+    private String slugging(String slug) {
+        Slugify slugify = new Slugify();
+        return slugify.withCustomReplacement("_", "-")
+                .slugify(slug);
+    }
+
 
 }

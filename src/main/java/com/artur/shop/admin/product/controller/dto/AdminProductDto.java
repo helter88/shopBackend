@@ -20,5 +20,8 @@ public record AdminProductDto(
         @Min(0)
         BigDecimal price,
         AdminProductCurrency currency,
-        String image) {
+        String image,
+        @NotBlank
+        @Length(min=2)
+        String slug) {
 }
