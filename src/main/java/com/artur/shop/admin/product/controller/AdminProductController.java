@@ -78,7 +78,7 @@ public class AdminProductController {
                 .id(id)
                 .name(adminProductDto.name())
                 .description(adminProductDto.description())
-                .category(adminProductDto.category())
+                .categoryId(adminProductDto.categoryId())
                 .price(adminProductDto.price())
                 .currency(adminProductDto.currency())
                 .image(adminProductDto.image())
