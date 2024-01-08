@@ -1,9 +1,9 @@
-package com.artur.shop.admin.product.service;
+package com.artur.shop.admin.common.utils;
 
 import com.github.slugify.Slugify;
 import org.apache.commons.io.FilenameUtils;
 
-class UploadedFilesNameUtils {
+public class SlugifyUtils {
     public static String slugifyFileName(String fileName) {
         String name = FilenameUtils.getBaseName(fileName);
         Slugify slg = new Slugify();
@@ -11,5 +11,11 @@ class UploadedFilesNameUtils {
                 .withCustomReplacement("_", "-")
                 .slugify(name);
         return changedName + "." + FilenameUtils.getExtension(fileName);
+    }
+
+    public static String slugging(String slug) {
+        Slugify slugify = new Slugify();
+        return slugify.withCustomReplacement("_", "-")
+                .slugify(slug);
     }
 }

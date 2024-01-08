@@ -1,13 +1,12 @@
 package com.artur.shop.review.controller;
 
-import com.artur.shop.review.model.Review;
-import com.artur.shop.review.model.ReviewDto;
+import com.artur.shop.common.model.Review;
+import com.artur.shop.review.dto.ReviewDto;
 import com.artur.shop.review.service.ReviewService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.jsoup.Jsoup;
 import org.jsoup.safety.Safelist;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 @RestController

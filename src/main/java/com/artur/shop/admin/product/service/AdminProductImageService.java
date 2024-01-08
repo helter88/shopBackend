@@ -1,5 +1,6 @@
 package com.artur.shop.admin.product.service;
 
+import com.artur.shop.admin.common.utils.SlugifyUtils;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.FileSystemResourceLoader;
 import org.springframework.core.io.Resource;
@@ -17,7 +18,7 @@ public class AdminProductImageService {
     @Value("${app.uploadDir}")
     private String uploadDir;
     public String uploadImage(String fileName, InputStream inputStream) {
-        String newFileName = UploadedFilesNameUtils.slugifyFileName(fileName);
+        String newFileName = SlugifyUtils.slugifyFileName(fileName);
         newFileName = ExistingFileRenameUtils.renameIfExist(Path.of(uploadDir), newFileName);
         Path filePath = Paths.get(uploadDir).resolve(newFileName);
 

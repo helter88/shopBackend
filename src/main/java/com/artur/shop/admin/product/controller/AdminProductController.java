@@ -21,6 +21,8 @@ import java.io.InputStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
 
+import static com.artur.shop.admin.common.utils.SlugifyUtils.slugging;
+
 @RestController
 @RequiredArgsConstructor
 public class AdminProductController {
@@ -85,12 +87,4 @@ public class AdminProductController {
                 .slug(slugging(adminProductDto.slug()))
                 .build();
     }
-
-    private String slugging(String slug) {
-        Slugify slugify = new Slugify();
-        return slugify.withCustomReplacement("_", "-")
-                .slugify(slug);
-    }
-
-
 }

@@ -1,4 +1,4 @@
-package com.artur.shop.review.model;
+package com.artur.shop.review.dto;
 
 import org.hibernate.validator.constraints.Length;
 

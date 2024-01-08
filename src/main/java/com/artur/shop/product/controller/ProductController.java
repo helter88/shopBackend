@@ -1,7 +1,7 @@
 package com.artur.shop.product.controller;
 
-import com.artur.shop.product.model.Product;
-import com.artur.shop.product.model.ProductListDto;
+import com.artur.shop.common.model.Product;
+import com.artur.shop.common.dto.ProductListDto;
 import com.artur.shop.product.service.ProductService;
 import jakarta.validation.constraints.Pattern;
 import lombok.RequiredArgsConstructor;

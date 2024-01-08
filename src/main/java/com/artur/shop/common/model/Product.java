@@ -1,6 +1,5 @@
-package com.artur.shop.product.model;
+package com.artur.shop.common.model;
 
-import com.artur.shop.review.model.Review;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;

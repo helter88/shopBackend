@@ -9,6 +9,8 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+import static com.artur.shop.admin.common.utils.SlugifyUtils.slugging;
+
 @RestController
 @RequestMapping("admin/categories")
 @RequiredArgsConstructor
@@ -45,13 +47,7 @@ public class AdminCategoryController {
                 .id(id)
                 .name(adminCategoryDto.name())
                 .description(adminCategoryDto.description())
-                .slug(slugifyCategoryName(adminCategoryDto.slug()))
+                .slug(slugging(adminCategoryDto.slug()))
                 .build();
-    }
-
-    private String slugifyCategoryName(String slug) {
-        Slugify slugify = new Slugify();
-        return  slugify.withCustomReplacement("_", "-")
-                .slugify(slug);
     }
 }

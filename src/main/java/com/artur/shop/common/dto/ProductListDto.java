@@ -1,4 +1,4 @@
-package com.artur.shop.product.model;
+package com.artur.shop.common.dto;
 
 import java.math.BigDecimal;
 

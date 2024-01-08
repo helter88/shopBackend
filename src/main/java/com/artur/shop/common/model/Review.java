@@ -1,4 +1,4 @@
-package com.artur.shop.review.model;
+package com.artur.shop.common.model;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;

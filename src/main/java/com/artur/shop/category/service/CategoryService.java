@@ -1,11 +1,11 @@
 package com.artur.shop.category.service;
 
-import com.artur.shop.category.model.Category;
-import com.artur.shop.category.model.CategoryProductsDto;
+import com.artur.shop.common.model.Category;
+import com.artur.shop.category.dto.CategoryProductsDto;
 import com.artur.shop.category.repository.CategoryRepository;
-import com.artur.shop.product.model.ProductListDto;
-import com.artur.shop.product.model.Product;
-import com.artur.shop.product.repository.ProdutRepository;
+import com.artur.shop.common.dto.ProductListDto;
+import com.artur.shop.common.model.Product;
+import com.artur.shop.common.repository.ProdutRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
