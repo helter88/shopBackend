@@ -1,8 +1,8 @@
 package com.artur.shop.cart.service;
 
-import com.artur.shop.cart.model.Cart;
+import com.artur.shop.common.model.Cart;
 import com.artur.shop.cart.model.CartProductDto;
-import com.artur.shop.cart.repository.CartRepository;
+import com.artur.shop.common.repository.CartRepository;
 import com.artur.shop.common.model.Product;
 import com.artur.shop.common.repository.ProdutRepository;
 import org.junit.jupiter.api.Test;

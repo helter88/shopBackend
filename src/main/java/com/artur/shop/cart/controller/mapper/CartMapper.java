@@ -4,8 +4,8 @@ import com.artur.shop.cart.controller.dto.CartSummaryDto;
 import com.artur.shop.cart.controller.dto.CartSummaryItemDto;
 import com.artur.shop.cart.controller.dto.ProductDto;
 import com.artur.shop.cart.controller.dto.SummaryDto;
-import com.artur.shop.cart.model.Cart;
-import com.artur.shop.cart.model.CartItem;
+import com.artur.shop.common.model.Cart;
+import com.artur.shop.common.model.CartItem;
 import com.artur.shop.common.model.Product;
 
 import java.math.BigDecimal;

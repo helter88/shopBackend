@@ -1,6 +1,6 @@
-package com.artur.shop.cart.repository;
+package com.artur.shop.common.repository;
 
-import com.artur.shop.cart.model.CartItem;
+import com.artur.shop.common.model.CartItem;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;

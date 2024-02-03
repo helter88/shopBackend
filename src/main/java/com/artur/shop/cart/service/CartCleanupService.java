@@ -1,8 +1,8 @@
 package com.artur.shop.cart.service;
 
-import com.artur.shop.cart.model.Cart;
-import com.artur.shop.cart.repository.CartItemRepository;
-import com.artur.shop.cart.repository.CartRepository;
+import com.artur.shop.common.model.Cart;
+import com.artur.shop.common.repository.CartItemRepository;
+import com.artur.shop.common.repository.CartRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.scheduling.annotation.Scheduled;

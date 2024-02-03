@@ -1,4 +1,4 @@
-package com.artur.shop.cart.model;
+package com.artur.shop.common.model;
 
 import com.artur.shop.common.model.Product;
 import jakarta.persistence.*;
