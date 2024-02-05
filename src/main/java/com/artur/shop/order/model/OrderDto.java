@@ -21,6 +21,8 @@ public record OrderDto(
         @NotBlank
         String phone,
         @NotNull
-        Long cartId
+        Long cartId,
+        @NotNull
+        Long shipmentId
 ) {
 }
