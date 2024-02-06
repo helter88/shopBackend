@@ -9,9 +9,11 @@ import com.artur.shop.order.model.OrderDto;
 import com.artur.shop.order.model.OrderRow;
 import com.artur.shop.order.model.OrderStatus;
 import com.artur.shop.order.model.OrderSummary;
+import com.artur.shop.order.model.Payment;
 import com.artur.shop.order.model.Shipment;
 import com.artur.shop.order.repository.OrderRowRepository;
 import com.artur.shop.order.repository.OrderRepository;
+import com.artur.shop.order.repository.PaymentRepository;
 import com.artur.shop.order.repository.ShipmentRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -30,10 +32,12 @@ public class OrderService {
     private final OrderRowRepository orderRowRepository;
     private final CartItemRepository cartItemRepository;
     private final ShipmentRepository shipmentRepository;
+    private final PaymentRepository paymentRepository;
     @Transactional
     public OrderSummary placeOrder(OrderDto orderDto) {
         Cart cart = cartRepository.findById(orderDto.cartId()).orElseThrow();
         Shipment shipment = shipmentRepository.findById(orderDto.shipmentId()).orElseThrow();
+        Payment payment = paymentRepository.findById(orderDto.paymentId()).orElseThrow();
         Order order = Order.builder()
                 .firstname(orderDto.firstname())
                 .lastname(orderDto.lastname())
@@ -45,9 +49,10 @@ public class OrderService {
                 .placeDate(LocalDateTime.now())
                 .orderStatus(OrderStatus.NEW)
                 .grossValue(calculateGrossValue(cart.getItems(), shipment))
+                .payment(payment)
                 .build();
         Order newOrder = orderRepository.save(order);
-        saveOrderRows(cart, newOrder.getId(), shipment);
+        saveOrderRows(cart, newOrder.getId(), shipment, payment);
         cartItemRepository.deleteByCartId(orderDto.cartId());
         cartRepository.deleteCartById(orderDto.cartId());
         return OrderSummary.builder()
@@ -55,6 +60,7 @@ public class OrderService {
                 .placeDate(newOrder.getPlaceDate())
                 .status(newOrder.getOrderStatus())
                 .grossValue(newOrder.getGrossValue())
+                .payment(payment)
                 .build();
     }
 
@@ -66,7 +72,7 @@ public class OrderService {
                 .add(shipment.getPrice());
     }
 
-    private void saveOrderRows(Cart cart, Long orderId, Shipment shipment) {
+    private void saveOrderRows(Cart cart, Long orderId, Shipment shipment, Payment payment) {
         cart.getItems().stream()
                 .map(cartItem -> OrderRow.builder()
                         .quantity(cartItem.getQuantity())

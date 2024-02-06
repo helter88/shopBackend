@@ -6,6 +6,7 @@ import com.artur.shop.order.model.InitOrder;
 import com.artur.shop.order.model.OrderDto;
 import com.artur.shop.order.model.OrderSummary;
 import com.artur.shop.order.service.OrderService;
+import com.artur.shop.order.service.PaymentService;
 import com.artur.shop.order.service.ShipmentService;
 import com.artur.shop.product.service.ProductService;
 import jakarta.validation.constraints.Pattern;
@@ -31,6 +32,7 @@ public class OrderController {
 
     private final OrderService orderService;
     private final ShipmentService shipmentService;
+    private final PaymentService paymentService;
 
     @PostMapping
     public OrderSummary placeOrder(@RequestBody OrderDto orderDto){
@@ -41,6 +43,7 @@ public class OrderController {
     public InitOrder initData() {
         return InitOrder.builder()
                 .shipments(shipmentService.getShipments())
+                .payments(paymentService.getPayments())
                 .build();
     }
 }

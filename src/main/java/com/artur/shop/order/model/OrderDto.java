@@ -23,6 +23,8 @@ public record OrderDto(
         @NotNull
         Long cartId,
         @NotNull
-        Long shipmentId
+        Long shipmentId,
+        @NotNull
+        Long paymentId
 ) {
 }
