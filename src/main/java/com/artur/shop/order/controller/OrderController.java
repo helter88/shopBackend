@@ -15,6 +15,7 @@ import org.hibernate.validator.constraints.Length;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -35,8 +36,8 @@ public class OrderController {
     private final PaymentService paymentService;
 
     @PostMapping
-    public OrderSummary placeOrder(@RequestBody OrderDto orderDto){
-        return orderService.placeOrder(orderDto);
+    public OrderSummary placeOrder(@RequestBody OrderDto orderDto, @AuthenticationPrincipal String name){
+        return orderService.placeOrder(orderDto, name);
     }
 
     @GetMapping("/initData")

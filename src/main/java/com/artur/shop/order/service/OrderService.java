@@ -16,6 +16,7 @@ import com.artur.shop.order.repository.OrderRowRepository;
 import com.artur.shop.order.repository.OrderRepository;
 import com.artur.shop.order.repository.PaymentRepository;
 import com.artur.shop.order.repository.ShipmentRepository;
+import com.artur.shop.security.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -42,12 +43,14 @@ public class OrderService {
     private final ShipmentRepository shipmentRepository;
     private final PaymentRepository paymentRepository;
     private final EmailClientService emailClientService;
+    private final UserRepository userRepository;
     @Transactional
-    public OrderSummary placeOrder(OrderDto orderDto) {
+    public OrderSummary placeOrder(OrderDto orderDto, String userName) {
         Cart cart = cartRepository.findById(orderDto.cartId()).orElseThrow();
         Shipment shipment = shipmentRepository.findById(orderDto.shipmentId()).orElseThrow();
         Payment payment = paymentRepository.findById(orderDto.paymentId()).orElseThrow();
-        Order newOrder = orderRepository.save(createNewOrder(orderDto, cart, shipment, payment));
+        Long userId =userRepository.findByUsername(userName).getId();
+        Order newOrder = orderRepository.save(createNewOrder(orderDto, cart, shipment, payment, userId));
         saveOrderRows(cart, newOrder.getId(), shipment, payment);
         clearOrderCart(orderDto);
         sendConfirmEmail(newOrder);

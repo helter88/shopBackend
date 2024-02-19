@@ -17,6 +17,8 @@ import com.artur.shop.order.repository.OrderRepository;
 import com.artur.shop.order.repository.OrderRowRepository;
 import com.artur.shop.order.repository.PaymentRepository;
 import com.artur.shop.order.repository.ShipmentRepository;
+import com.artur.shop.security.model.User;
+import com.artur.shop.security.repository.UserRepository;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -31,6 +33,7 @@ import java.util.Optional;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
@@ -53,6 +56,9 @@ class OrderServiceTest {
     @InjectMocks
     private OrderService orderService;
 
+    @Mock
+    private UserRepository userRepository;
+
     @Test
     void shouldPlaceOrder() {
         //given
@@ -73,8 +79,10 @@ class OrderServiceTest {
         when(paymentRepository.findById(any())).thenReturn(createPayment());
         when(orderRepository.save(any())).thenAnswer(invocationOnMock -> invocationOnMock.getArguments()[0]);
         when(emailClientService.getInstance()).thenReturn(new FakeEmailService());
+        when(userRepository.findByUsername(anyString())).thenReturn(createUser());
+        String userName = "test@test";
         //when
-        OrderSummary orderSummary = orderService.placeOrder(orderDto);
+        OrderSummary orderSummary = orderService.placeOrder(orderDto, userName);
         //then
         assertThat(orderSummary).isNotNull();
         assertThat(orderSummary.getStatus()).isEqualTo(OrderStatus.NEW);
@@ -110,6 +118,15 @@ class OrderServiceTest {
                         .created(LocalDateTime.now())
                         .items(createItems())
                 .build());
+    }
+
+    private User createUser() {
+        return User.builder()
+                .id(1L)
+                .password("test")
+                .username("test@test")
+                .enabled(true)
+                .build();
     }
 
     private List<CartItem> createItems() {
