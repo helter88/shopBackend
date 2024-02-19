@@ -3,7 +3,9 @@ package com.artur.shop.order.controller;
 import com.artur.shop.common.dto.ProductListDto;
 import com.artur.shop.common.model.Product;
 import com.artur.shop.order.model.InitOrder;
+import com.artur.shop.order.model.Order;
 import com.artur.shop.order.model.OrderDto;
+import com.artur.shop.order.model.OrderListDto;
 import com.artur.shop.order.model.OrderSummary;
 import com.artur.shop.order.service.OrderService;
 import com.artur.shop.order.service.PaymentService;
@@ -46,5 +48,13 @@ public class OrderController {
                 .shipments(shipmentService.getShipments())
                 .payments(paymentService.getPayments())
                 .build();
+    }
+
+    @GetMapping()
+    public List<OrderListDto> getOrders(@AuthenticationPrincipal String name) {
+        if (name.equals("anonymousUser")){
+            throw new IllegalArgumentException("No user");
+        }
+        return orderService.getOrdersByUserName(name);
     }
 }

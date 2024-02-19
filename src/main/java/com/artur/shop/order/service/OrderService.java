@@ -2,13 +2,11 @@ package com.artur.shop.order.service;
 
 import com.artur.shop.common.mail.EmailClientService;
 import com.artur.shop.common.model.Cart;
-import com.artur.shop.common.model.CartItem;
 import com.artur.shop.common.repository.CartItemRepository;
 import com.artur.shop.common.repository.CartRepository;
 import com.artur.shop.order.model.Order;
 import com.artur.shop.order.model.OrderDto;
-import com.artur.shop.order.model.OrderRow;
-import com.artur.shop.order.model.OrderStatus;
+import com.artur.shop.order.model.OrderListDto;
 import com.artur.shop.order.model.OrderSummary;
 import com.artur.shop.order.model.Payment;
 import com.artur.shop.order.model.Shipment;
@@ -21,11 +19,9 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.math.BigDecimal;
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.List;
 
+import static com.artur.shop.order.service.mapper.OrderDtoMapper.mapToOrderListDto;
 import static com.artur.shop.order.service.mapper.OrderEmailMessageMapper.createEmailMessage;
 import static com.artur.shop.order.service.mapper.OrderMapper.createNewOrder;
 import static com.artur.shop.order.service.mapper.OrderMapper.createOrderSummary;
@@ -76,5 +72,10 @@ public class OrderService {
                 .toList();
 
         orderRowRepository.save(mapToOrderRowWithQuantity(orderId, shipment));
+    }
+
+    public List<OrderListDto> getOrdersByUserName(String name) {
+        Long userId = userRepository.findByUsername(name).getId();
+        return mapToOrderListDto(orderRepository.findByUserId(userId));
     }
 }

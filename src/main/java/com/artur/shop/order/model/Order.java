@@ -1,5 +1,6 @@
 package com.artur.shop.order.model;
 
+import com.artur.shop.common.model.OrderStatus;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;

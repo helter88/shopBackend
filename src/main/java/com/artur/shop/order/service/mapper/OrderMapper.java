@@ -5,7 +5,7 @@ import com.artur.shop.common.model.CartItem;
 import com.artur.shop.order.model.Order;
 import com.artur.shop.order.model.OrderDto;
 import com.artur.shop.order.model.OrderRow;
-import com.artur.shop.order.model.OrderStatus;
+import com.artur.shop.common.model.OrderStatus;
 import com.artur.shop.order.model.OrderSummary;
 import com.artur.shop.order.model.Payment;
 import com.artur.shop.order.model.Shipment;

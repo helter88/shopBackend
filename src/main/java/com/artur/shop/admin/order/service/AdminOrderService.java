@@ -5,6 +5,7 @@ import com.artur.shop.admin.order.model.AdminOrderLog;
 import com.artur.shop.admin.order.model.AdminOrderStatus;
 import com.artur.shop.admin.order.repository.AdminOrderLogRepository;
 import com.artur.shop.admin.order.repository.AdminOrderRepository;
+import com.artur.shop.common.model.OrderStatus;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -45,8 +46,8 @@ public class AdminOrderService {
 
     private void patchOrderStatus(AdminOrder adminOrder, Map<String, String> status) {
         if (status.get("orderStatus") != null) {
-            AdminOrderStatus oldStatus = adminOrder.getOrderStatus();
-            AdminOrderStatus newStatus = AdminOrderStatus.valueOf(status.get("orderStatus"));
+            OrderStatus oldStatus = adminOrder.getOrderStatus();
+            OrderStatus newStatus = OrderStatus.valueOf(status.get("orderStatus"));
             if(oldStatus == newStatus){
                 return;
             }
@@ -56,7 +57,7 @@ public class AdminOrderService {
         }
     }
 
-    private void logStatusChange(Long orderId, AdminOrderStatus oldStatus, AdminOrderStatus newStatus) {
+    private void logStatusChange(Long orderId, OrderStatus oldStatus, OrderStatus newStatus) {
         adminOrderLogRepository.save(AdminOrderLog.builder()
                         .created(LocalDateTime.now())
                         .orderId(orderId)

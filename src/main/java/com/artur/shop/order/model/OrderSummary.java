@@ -1,5 +1,6 @@
 package com.artur.shop.order.model;
 
+import com.artur.shop.common.model.OrderStatus;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;

@@ -8,7 +8,7 @@ import com.artur.shop.common.model.Product;
 import com.artur.shop.common.repository.CartItemRepository;
 import com.artur.shop.common.repository.CartRepository;
 import com.artur.shop.order.model.OrderDto;
-import com.artur.shop.order.model.OrderStatus;
+import com.artur.shop.common.model.OrderStatus;
 import com.artur.shop.order.model.OrderSummary;
 import com.artur.shop.order.model.Payment;
 import com.artur.shop.order.model.PaymentType;
@@ -31,7 +31,6 @@ import java.util.List;
 import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.when;
