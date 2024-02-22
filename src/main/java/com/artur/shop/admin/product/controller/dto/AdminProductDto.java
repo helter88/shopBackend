@@ -23,5 +23,7 @@ public record AdminProductDto(
         String image,
         @NotBlank
         @Length(min=2)
-        String slug) {
+        String slug,
+        @Min(0)
+        BigDecimal discountPrice){
 }

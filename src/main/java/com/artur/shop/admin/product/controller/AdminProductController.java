@@ -85,6 +85,7 @@ public class AdminProductController {
                 .currency(adminProductDto.currency())
                 .image(adminProductDto.image())
                 .slug(slugging(adminProductDto.slug()))
+                .discountPrice(adminProductDto.discountPrice())
                 .build();
     }
 }

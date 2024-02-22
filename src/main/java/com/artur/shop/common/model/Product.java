@@ -22,10 +22,15 @@ public class Product {
     private Long categoryId;
     private String description;
     private BigDecimal price;
+    private BigDecimal discountPrice;
     private String currency;
     private String image;
     private String slug;
     @OneToMany
     @JoinColumn(name = "productId")
     private List<Review> reviews;
+
+    public BigDecimal getFinalPrice() {
+        return discountPrice != null ? discountPrice : price;
+    }
 }

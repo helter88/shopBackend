@@ -28,11 +28,11 @@ public class CartMapper {
     }
 
     private static BigDecimal calculateLineValue(CartItem cartItem) {
-        return cartItem.getProduct().getPrice().multiply(BigDecimal.valueOf(cartItem.getQuantity()));
+        return cartItem.getProduct().getFinalPrice().multiply(BigDecimal.valueOf(cartItem.getQuantity()));
     }
 
     private static ProductDto mapToProductDto(Product product) {
-        return new ProductDto(product.getId(), product.getName(), product.getPrice(), product.getCurrency(), product.getImage(), product.getSlug());
+        return new ProductDto(product.getId(), product.getName(), product.getFinalPrice(), product.getCurrency(), product.getImage(), product.getSlug());
     }
 
     private static SummaryDto mapToSummary(List<CartItem> items) {

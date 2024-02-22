@@ -9,6 +9,7 @@ public record ProductListDto(
         BigDecimal price,
         String currency,
         String image,
-        String slug
+        String slug,
+        BigDecimal discountPrice
 ) {
 }
