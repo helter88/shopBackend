@@ -1,5 +1,6 @@
 package com.artur.shop.security;
 
+import com.artur.shop.security.exception.RegisterException;
 import com.artur.shop.security.model.User;
 import com.artur.shop.security.model.UserRole;
 import com.artur.shop.security.repository.UserRepository;
@@ -71,10 +72,10 @@ public class LoginController {
     @PostMapping("/register")
     public Token register(@RequestBody @Valid RegisterCredentials registerCredentials){
        if(!registerCredentials.getPassword().equals(registerCredentials.getRepeatedPassword())){
-           throw new IllegalArgumentException("Passwords are not identical");
+           throw new RegisterException("Passwords are not identical");
        }
        if(userRepository.existsByUsername(registerCredentials.getUsername())){
-           throw new IllegalArgumentException("The user already exists");
+           throw new RegisterException("The user already exists");
        }
        userRepository.save(User.builder()
                        .username(registerCredentials.getUsername())
