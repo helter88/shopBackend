@@ -24,7 +24,6 @@ public class Product {
     private BigDecimal price;
     private BigDecimal discountPrice;
     private String currency;
-    private String image;
     private String slug;
     @OneToMany
     @JoinColumn(name = "productId")

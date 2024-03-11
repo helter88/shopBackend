@@ -32,7 +32,7 @@ public class CartMapper {
     }
 
     private static ProductDto mapToProductDto(Product product) {
-        return new ProductDto(product.getId(), product.getName(), product.getFinalPrice(), product.getCurrency(), product.getImage(), product.getSlug());
+        return new ProductDto(product.getId(), product.getName(), product.getFinalPrice(), product.getCurrency(), product.getSlug());
     }
 
     private static SummaryDto mapToSummary(List<CartItem> items) {

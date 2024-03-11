@@ -31,7 +31,7 @@ public class CategoryService {
         Category category = categoryRepository.findBySlug(slug);
         Page<Product> page = produtRepository.findByCategoryId(category.getId(), pageable);
         List<ProductListDto> productListDto = page.getContent().stream()
-                .map(product -> new ProductListDto(product.getId(), product.getName(), product.getDescription(), product.getPrice(), product.getCurrency(), product.getImage(), product.getSlug(), product.getDiscountPrice()))
+                .map(product -> new ProductListDto(product.getId(), product.getName(), product.getDescription(), product.getPrice(), product.getCurrency(), product.getSlug(), product.getDiscountPrice()))
                 .toList();
         return new CategoryProductsDto(category, new PageImpl<>(productListDto, pageable, page.getTotalElements() ));
     }
