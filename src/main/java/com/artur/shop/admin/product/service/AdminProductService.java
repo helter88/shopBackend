@@ -9,6 +9,7 @@ import com.artur.shop.admin.product.model.ProductImage;
 import com.artur.shop.admin.product.repository.AdminProductRepository;
 import com.artur.shop.admin.product.repository.ImageRepository;
 import com.artur.shop.admin.product.repository.ProductImageRepository;
+import com.artur.shop.common.repository.CartItemRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -27,6 +28,7 @@ public class AdminProductService {
     private final AdminProductRepository adminProductRepository;
     private final ImageRepository imageRepository;
     private final ProductImageRepository productImageRepository;
+    private final CartItemRepository cartItemRepository;
 
     public Page<AdminProduct> getProducts(Pageable pageable) {
         return adminProductRepository.findAllWithImages(pageable);
@@ -97,9 +99,14 @@ public class AdminProductService {
             productImageRepository.save(productImage);
         }
     }
-
+    @Transactional
     public void deleteProduct(Long id) {
+        if (cartItemRepository.existsByProductId(id)){
+            throw new RuntimeException("Can't delete product because of existing element in cart");
+        }
+        adminProductRepository.deleteProductImagesByProductId(id);
         adminProductRepository.deleteById(id);
+        imageRepository.deleteOrphanImages();
     }
 
     public void addProduct(AdminProductDto productDTO, List<MultipartFile> images) throws IOException {
