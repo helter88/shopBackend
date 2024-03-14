@@ -4,6 +4,7 @@ import com.artur.shop.admin.order.model.AdminOrder;
 import com.artur.shop.admin.order.model.AdminOrderStatus;
 import com.artur.shop.admin.order.model.dto.AdminOrderStats;
 import com.artur.shop.admin.order.repository.AdminOrderRepository;
+import com.artur.shop.common.model.OrderStatus;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -23,7 +24,7 @@ public class AdminOrderStatService {
         List<AdminOrder> orders = orderRepository.findAllByPlaceDateIsBetweenAndOrderStatus(
                 from,
                 to,
-                AdminOrderStatus.COMPLETED
+                OrderStatus.COMPLETED
         );
 
         TreeMap<Integer, AdminOrderStatsValue> result = new TreeMap<>();
