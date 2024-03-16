@@ -1,5 +1,7 @@
 package com.artur.shop.common.model;
 
+import com.artur.shop.admin.product.model.ProductImage;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -8,6 +10,7 @@ import lombok.NoArgsConstructor;
 
 import java.math.BigDecimal;
 import java.util.List;
+import java.util.Set;
 
 @Entity
 @Getter
@@ -28,6 +31,10 @@ public class Product {
     @OneToMany
     @JoinColumn(name = "productId")
     private List<Review> reviews;
+
+    @JsonManagedReference
+    @OneToMany(mappedBy = "product", fetch = FetchType.EAGER)
+    private Set<ProductImage> productImages;
 
     public BigDecimal getFinalPrice() {
         return discountPrice != null ? discountPrice : price;
