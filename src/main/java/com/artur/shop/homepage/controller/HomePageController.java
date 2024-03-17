@@ -15,6 +15,6 @@ public class HomePageController {
     @GetMapping("/homePage")
     @Cacheable("homePage")
     public HomePageDto getMainPage() {
-        return new HomePageDto(homePageService.getDiscountedProducts());
+        return homePageService.getDiscountedProducts();
     }
 }
