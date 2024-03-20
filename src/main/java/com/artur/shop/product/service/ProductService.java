@@ -66,4 +66,8 @@ public class ProductService {
 
         return results;
     }
+
+    public Page<Product> searchProducts(String query, Pageable pageable){
+        return produtRepository.searchByQuery(query, pageable);
+    }
 }

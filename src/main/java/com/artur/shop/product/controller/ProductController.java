@@ -55,4 +55,22 @@ public class ProductController {
     public ResponseEntity<List<String>> searchPrompt(@RequestParam String query) {
         return ResponseEntity.ok(productService.searchPrompt(query));
     }
+
+    @GetMapping("/search")
+    public Page<ProductListDto> searchProduct(@RequestParam String query, Pageable pageable ) {
+        Page<Product> products = productService.searchProducts(query, pageable);
+        List<ProductListDto> productListDto = products.getContent().stream()
+                .map(product -> new ProductListDto(
+                        product.getId(),
+                        product.getName(),
+                        product.getDescription(),
+                        product.getPrice(),
+                        product.getCurrency(),
+                        product.getSlug(),
+                        product.getDiscountPrice(),
+                        product.getProductImages().stream().findFirst().orElse(null)
+                ))
+                .toList();
+        return  new PageImpl<>(productListDto, pageable, products.getTotalElements());
+    }
 }
