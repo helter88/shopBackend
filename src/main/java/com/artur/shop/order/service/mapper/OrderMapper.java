@@ -2,6 +2,7 @@ package com.artur.shop.order.service.mapper;
 
 import com.artur.shop.common.model.Cart;
 import com.artur.shop.common.model.CartItem;
+import com.artur.shop.common.model.UserData;
 import com.artur.shop.order.model.Order;
 import com.artur.shop.order.model.OrderDto;
 import com.artur.shop.order.model.OrderRow;
@@ -65,6 +66,20 @@ public class OrderMapper {
                 .price((shipment.getPrice()))
                 .shipmentId(shipment.getId())
                 .orderId(orderId)
+                .build();
+    }
+
+    public static UserData mapOrderDtoToUserData(OrderDto orderDto, Long userId, Long userDataId) {
+        return UserData.builder()
+                .id(userDataId)
+                .firstname(orderDto.firstname())
+                .lastname(orderDto.lastname())
+                .street(orderDto.street())
+                .zipcode(orderDto.zipcode())
+                .city(orderDto.city())
+                .phone(orderDto.phone())
+                .email(orderDto.email())
+                .userId(userId)
                 .build();
     }
 }

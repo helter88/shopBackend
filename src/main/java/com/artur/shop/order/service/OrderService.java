@@ -2,8 +2,10 @@ package com.artur.shop.order.service;
 
 import com.artur.shop.common.mail.EmailClientService;
 import com.artur.shop.common.model.Cart;
+import com.artur.shop.common.model.UserData;
 import com.artur.shop.common.repository.CartItemRepository;
 import com.artur.shop.common.repository.CartRepository;
+import com.artur.shop.common.repository.UserDataRepository;
 import com.artur.shop.order.model.Order;
 import com.artur.shop.order.model.OrderDto;
 import com.artur.shop.order.model.OrderListDto;
@@ -25,6 +27,7 @@ import static com.artur.shop.order.service.mapper.OrderDtoMapper.mapToOrderListD
 import static com.artur.shop.order.service.mapper.OrderEmailMessageMapper.createEmailMessage;
 import static com.artur.shop.order.service.mapper.OrderMapper.createNewOrder;
 import static com.artur.shop.order.service.mapper.OrderMapper.createOrderSummary;
+import static com.artur.shop.order.service.mapper.OrderMapper.mapOrderDtoToUserData;
 import static com.artur.shop.order.service.mapper.OrderMapper.mapToOrderRow;
 import static com.artur.shop.order.service.mapper.OrderMapper.mapToOrderRowWithQuantity;
 
@@ -40,6 +43,7 @@ public class OrderService {
     private final PaymentRepository paymentRepository;
     private final EmailClientService emailClientService;
     private final UserRepository userRepository;
+    private final UserDataRepository userDataRepository;
     @Transactional
     public OrderSummary placeOrder(OrderDto orderDto, String userName) {
         Cart cart = cartRepository.findById(orderDto.cartId()).orElseThrow();
@@ -47,6 +51,8 @@ public class OrderService {
         Payment payment = paymentRepository.findById(orderDto.paymentId()).orElseThrow();
         Long userId =userRepository.findByUsername(userName).getId();
         Order newOrder = orderRepository.save(createNewOrder(orderDto, cart, shipment, payment, userId));
+        Long userDataId  = userDataRepository.findByUserId(userId) == null ? null : userDataRepository.findByUserId(userId).getId();
+        userDataRepository.save(mapOrderDtoToUserData(orderDto, userId, userDataId));
         saveOrderRows(cart, newOrder.getId(), shipment, payment);
         clearOrderCart(orderDto);
         sendConfirmEmail(newOrder);
