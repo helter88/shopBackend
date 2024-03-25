@@ -5,8 +5,9 @@ import com.artur.shop.userData.model.dto.UserDataDto;
 
 public class UserDataMapper {
 
-    public static UserData createUserData(UserDataDto userDataDto, Long userId){
+    public static UserData createUserData(UserDataDto userDataDto, Long userId, Long userDataId){
         return UserData.builder()
+                .id(userDataId)
                 .firstname(userDataDto.firstname())
                 .lastname(userDataDto.lastname())
                 .street(userDataDto.street())

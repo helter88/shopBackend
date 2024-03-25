@@ -21,7 +21,9 @@ public class UserDataService {
     @Transactional
     public void saveUserData(UserDataDto userDataDto, String userName) {
         Long userId = userRepository.findByUsername(userName).getId();
-        userDataRepository.save(createUserData(userDataDto, userId));
+        UserData userData = userDataRepository.findByUserId(userId);
+        Long userDataId  = userData == null ? null : userData.getId();
+        userDataRepository.save(createUserData(userDataDto, userId, userDataId));
     }
 
     public UserDataDto getUserData(String userName) {
