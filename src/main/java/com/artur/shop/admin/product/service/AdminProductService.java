@@ -11,12 +11,16 @@ import com.artur.shop.admin.product.repository.ImageRepository;
 import com.artur.shop.admin.product.repository.ProductImageRepository;
 import com.artur.shop.common.repository.CartItemRepository;
 import lombok.RequiredArgsConstructor;
+import net.coobird.thumbnailator.Thumbnails;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.imageio.ImageIO;
+import java.awt.image.BufferedImage;
+import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.util.Base64;
 import java.util.List;
@@ -82,21 +86,22 @@ public class AdminProductService {
 
         adminProductRepository.deleteProductImagesByProductId(product.getId());
         imageRepository.deleteOrphanImages();
+        if(images != null) {
+            for (MultipartFile file : images) {
+                byte[] compressedImage = compressImage(file);
+                Image image = Image.builder()
+                        .filename(file.getOriginalFilename())
+                        .filetype(file.getContentType())
+                        .image(compressedImage)
+                        .build();
+                image = imageRepository.save(image);
 
-        for (MultipartFile file : images) {
-            Image image = Image.builder()
-                    .filename(file.getOriginalFilename())
-                    .filetype(file.getContentType())
-                    .image(file.getBytes())
-                    .build();
-            image = imageRepository.save(image);
-
-            ProductImage productImage = ProductImage.builder()
-                    .product(product)
-                    .image(image)
-                    .build();
-
-            productImageRepository.save(productImage);
+                ProductImage productImage = ProductImage.builder()
+                        .product(product)
+                        .image(image)
+                        .build();
+                productImageRepository.save(productImage);
+            }
         }
     }
     @Transactional
@@ -122,21 +127,34 @@ public class AdminProductService {
                 .build();
 
         product = adminProductRepository.save(product);
+        if(images != null) {
+            for (MultipartFile file : images) {
+                byte[] compressedImage = compressImage(file);
+                Image image = Image.builder()
+                        .filename(file.getOriginalFilename())
+                        .filetype(file.getContentType())
+                        .image(compressedImage)
+                        .build();
+                image = imageRepository.save(image);
 
-        for (MultipartFile file : images) {
-            Image image = Image.builder()
-                    .filename(file.getOriginalFilename())
-                    .filetype(file.getContentType())
-                    .image(file.getBytes())
-                    .build();
-            image = imageRepository.save(image);
+                ProductImage productImage = ProductImage.builder()
+                        .product(product)
+                        .image(image)
+                        .build();
 
-            ProductImage productImage = ProductImage.builder()
-                    .product(product)
-                    .image(image)
-                    .build();
-
-            productImageRepository.save(productImage);
+                productImageRepository.save(productImage);
+            }
         }
+    }
+
+    private byte[] compressImage(MultipartFile file) throws IOException {
+        BufferedImage originalImage = ImageIO.read(file.getInputStream());
+        ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+        Thumbnails.of(originalImage)
+                .size(800, 800) // można dostosować wymiary
+                .outputFormat("jpeg")
+                .outputQuality(0.75) // jakość obrazu, 0.75 to 75%
+                .toOutputStream(outputStream);
+        return outputStream.toByteArray();
     }
 }
