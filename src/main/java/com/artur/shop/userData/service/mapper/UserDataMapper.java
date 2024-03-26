@@ -20,6 +20,7 @@ public class UserDataMapper {
     }
 
     public static UserDataDto mapUserDataToDto(UserData userData){
+        if (userData == null) return null;
         return new UserDataDto(
                 userData.getFirstname(),
                 userData.getLastname(),
