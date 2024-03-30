@@ -1,4 +1,4 @@
-FROM alpine:3 AS build
+FROM jelastic/maven:3.9.5-openjdk-21 AS build
 COPY . /app
 WORKDIR /app
 RUN mvn clean package -DskipTests
