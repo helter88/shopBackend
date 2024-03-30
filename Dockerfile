@@ -1,5 +1,6 @@
 FROM alpine:3 AS build
-COPY ..
+COPY . /app
+WORKDIR /app
 RUN mvn clean package -DskipTests
 
 FROM openjdk:21-jdk
