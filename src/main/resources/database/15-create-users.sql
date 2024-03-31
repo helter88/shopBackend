@@ -9,6 +9,7 @@ create table users(
 
 --changeset ah:15.1
 create table authorities (
+    id bigint not null auto_increment PRIMARY KEY,
 	username varchar(50) not null,
 	authority varchar(50) not null,
 	constraint fk_authorities_users foreign key(username) references users(username)
