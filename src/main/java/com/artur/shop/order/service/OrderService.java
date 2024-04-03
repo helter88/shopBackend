@@ -52,7 +52,7 @@ public class OrderService {
         Long userId = userRepository.findByUsername(userName) == null ? null : userRepository.findByUsername(userName).getId();
         Order newOrder = orderRepository.save(createNewOrder(orderDto, cart, shipment, payment, userId));
         Long userDataId  = userDataRepository.findByUserId(userId) == null ? null : userDataRepository.findByUserId(userId).getId();
-        userDataRepository.save(mapOrderDtoToUserData(orderDto, userId, userDataId));
+        if(userDataId != null) userDataRepository.save(mapOrderDtoToUserData(orderDto, userId, userDataId));
         saveOrderRows(cart, newOrder.getId(), shipment, payment);
         clearOrderCart(orderDto);
         sendConfirmEmail(newOrder);
