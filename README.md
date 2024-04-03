@@ -54,6 +54,6 @@ mvn spring-boot:run
 ## Rest-API Endpoints
 
 Service url: [Swagger](https://shopbackend-4.onrender.com/swagger-ui/index.html "click to see swagger")
-<img src="./readme_images/swagger-1.png" alt="swagger-1">
-<img src="./readme_images/swagger-2.png" alt="swagger-2">
-<img src="./readme_images/swagger-3.png" alt="swagger-3">
+<img src="./readme_images/swagger-1.PNG" alt="swagger-1">
+<img src="./readme_images/swagger-2.PNG" alt="swagger-2">
+<img src="./readme_images/swagger-3.PNG" alt="swagger-3">
