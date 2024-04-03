@@ -49,7 +49,7 @@ public class OrderService {
         Cart cart = cartRepository.findById(orderDto.cartId()).orElseThrow();
         Shipment shipment = shipmentRepository.findById(orderDto.shipmentId()).orElseThrow();
         Payment payment = paymentRepository.findById(orderDto.paymentId()).orElseThrow();
-        Long userId =userRepository.findByUsername(userName).getId();
+        Long userId = userRepository.findByUsername(userName) == null ? null : userRepository.findByUsername(userName).getId();
         Order newOrder = orderRepository.save(createNewOrder(orderDto, cart, shipment, payment, userId));
         Long userDataId  = userDataRepository.findByUserId(userId) == null ? null : userDataRepository.findByUserId(userId).getId();
         userDataRepository.save(mapOrderDtoToUserData(orderDto, userId, userDataId));
