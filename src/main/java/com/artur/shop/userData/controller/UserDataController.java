@@ -32,7 +32,8 @@ public class UserDataController {
     @GetMapping
     public UserDataDto getUserData(@AuthenticationPrincipal String name){
         if (name.equals("anonymousUser")){
-            throw new IllegalArgumentException("No user");
+//            throw new IllegalArgumentException("No user");
+            return null;
         }
         return userDataService.getUserData(name);
     }
